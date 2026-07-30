@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 class change {
     public int[] solution(int[] num_list, int n) {
-        int[] answer = new int[n];
+        
         int length = num_list.length;
-            
+        int[] answer = new int[length];
+        
         List<Integer> result = new ArrayList<>();
         
         
@@ -17,8 +18,9 @@ class change {
             result.add(num_list[j]);
         }
         
+        System.out.println(result);
         
-        for(int k=0; k<n; k++){
+        for(int k=0; k<length; k++){
             answer[k] = result.get(k);
             
         }

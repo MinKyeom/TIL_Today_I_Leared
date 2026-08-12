@@ -1,3 +1,56 @@
+// 출처
+
+/*
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/
+ */
+
+
+//개선 중 
+import java.util.ArrayDeque;
+import java.util.List;
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+    
+     if(s.isEmpty()){
+        return 0;
+     }
+      // S list로 쪼개기
+      ArrayDeque<String> SDeque = new ArrayDeque<>(List.of(s.split("")));
+      System.out.println(SDeque.size());
+      // 현재값 저장 
+      ArrayDeque<String> now = new ArrayDeque<>();
+
+      // 결과
+      int result = 0;
+
+      for(String i: SDeque){
+        System.out.println(i);
+
+        if(now.contains(i)){
+            int idx = new ArrayList<>(now).indexOf(i);
+            int end  = now.size();
+
+            for (int k = 0; k < idx+1; k++){
+                now.pollFirst();
+                System.out.println("제대로 나오나"+now.size());
+            }
+            now.addLast(i);
+        }
+        else {
+            System.out.println("이거");
+            now.addLast(i);
+            result = Math.max(result,now.size());
+            System.out.println(result);
+        }
+        
+      }
+
+      return result;
+    }
+}
+
+
 // 개선 중 
 
 import java.util.ArrayDeque;

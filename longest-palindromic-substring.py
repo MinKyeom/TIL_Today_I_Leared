@@ -1,5 +1,81 @@
 # 출처:https://leetcode.com/problems/longest-palindromic-substring/
 
+# 개선 중 
+from collections import deque,Counter
+import copy
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        String_list = list(s)
+        before_list = deque([''])
+        result_list = []
+
+        if len(String_list) == 1:
+            return String_list[0]
+
+        elif len(String_list)==0:
+            return ''
+
+        # 직전 문자
+        beforeString = ''
+
+        for String in String_list:
+
+            new_list = deque([])
+            
+            for num in range(len(before_list)):
+                
+                # 해당 문자
+                before = before_list[num]
+
+                # 빈 리스트인 경우 확인 필요 없음
+                if before =='':
+                    before += String
+                    new_list.append(before)
+                    continue
+
+                else:
+                    start = num
+
+                    # 이전 현재 숫자를 비롯해 점검
+                    for minus in range(len(before)-1,-1,-1):
+                        if before[minus] == s[start]:
+                            start-=1 
+                            continue
+                        
+                        else:
+                            break
+                
+                    else:
+                        before+=String
+                        new_list.append(before)
+                        continue
+
+
+            before_list += new_list
+            # print(new_list)
+ 
+
+        result_num =0
+        result = ''
+
+        for check in before_list:
+
+            check_count = Counter(check)
+
+            # 앞 뒤가 같고, 총 개수가 2개
+            if len(check) >=2 and check == check[::-1]:
+                if len(check) > result_num:
+                    result_num = len(check)
+                    result = check
+            else:
+                if len(check) == 1 and result_num ==0:
+                    result_num = len(check)
+                    result =check
+
+
+        return result
+
 # 개선 중
 from collections import deque,Counter
 import copy

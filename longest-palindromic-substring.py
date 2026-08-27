@@ -1,4 +1,35 @@
 # 출처:https://leetcode.com/problems/longest-palindromic-substring/
+
+# 개선 중 
+
+from collections import deque,Counter
+import copy
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        sList = list(s)
+        check = []
+        for start in range(len(s)):
+            words = sList[start]
+
+            for end in range(start+1,len(s)):
+                words+=sList[end]
+                check.append(words)
+        
+            if len(words)==1:
+                check.append(words)
+
+        check = set(check)
+
+        num = 0
+        result = ''
+        for c in check:
+            if c == c[::-1] and len(c) > num:
+                num = len(c)
+                result = c
+
+        return result
+
 # 개선 중
 from collections import deque,Counter
 import copy

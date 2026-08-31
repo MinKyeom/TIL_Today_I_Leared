@@ -1,6 +1,7 @@
 # 출처:https://leetcode.com/problems/longest-palindromic-substring/
 
 # 개선 중 
+# 투포인터에 대한 접근 생각 for문 2번을 실행할 걸 1번만에 해결
 
 from collections import deque,Counter
 import copy
@@ -303,3 +304,33 @@ class Solution:
   #                        key=len) # 길이 기준으로
   #       return result   
 """
+  
+  # 리트코드 샘플 DP 정답
+  # 출처 : 리트코드 샘플 코드
+
+
+"""
+# class Solution:
+#     def longestPalindrome(self, s: str) -> str:
+#         n = len(s)
+#         dp = [[False] * n for _ in range(n)]
+#         ans = [0, 0]
+
+#         for i in range(n):
+#             dp[i][i] = True
+
+#         for i in range(n - 1):
+#             if s[i] == s[i + 1]:
+#                 dp[i][i + 1] = True
+#                 ans = [i, i + 1]
+
+#         for diff in range(2, n):
+#             for i in range(n - diff):
+#                 j = i + diff
+#                 if s[i] == s[j] and dp[i + 1][j - 1]:
+#                     dp[i][j] = True
+#                     ans = [i, j]
+
+#         i, j = ans
+#         return s[i : j + 1]
+    """

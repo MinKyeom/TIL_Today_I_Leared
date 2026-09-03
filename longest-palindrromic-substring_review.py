@@ -51,4 +51,16 @@ class Solution:
                          expand(i, i + 1), # 2칸짜리 포인터
                          expand(i, i + 2), # 3칸짜리 포인터
                          key=len) # 길이 기준으로
+            
+            print(result)
+            
         return result
+      
+# max문법에서는 동률일때는 가장 처음 값이 선택된다
+
+Test = Solution()
+
+s = "cchheecckk"
+
+Test.longestPalindrome(s)
+

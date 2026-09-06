@@ -64,3 +64,11 @@ s = "cchheecckk"
 
 Test.longestPalindrome(s)
 
+#max 문법에 대한 세부 이해
+
+"""
+
+max 문법의 경우 동일한 값일 경우 첫번째 값을 계속 채택한다 이 부분에 대한 이해가 필요하다
+
+"""
+

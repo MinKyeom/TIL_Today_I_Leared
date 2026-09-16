@@ -1,5 +1,5 @@
 """
-에에이전트 코드 예시 
+에이전트 코드 예시 
 에이전트는 주변 환경 인식(Perceive) -> 판단(Decide) -> 행동(Act) 구조로 동작합니다.  
 """
 class TemperatureAgent:
@@ -88,3 +88,39 @@ for obs in observations:
     print(f"\n[관찰된 상태]: {obs}")
     decision = agent.decide_and_act(obs)
     print(f"[LLM 판단 결과]:\n{decision}")
+
+
+
+# 에이전트 기초 샘플2
+
+import os
+from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_community.llms import OpenAI
+from langchain.agents import initialize_agent, AgentType, tool
+
+# 1. API 키 설정 (본인의 OpenAI API 키 입력)
+os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
+
+# 2. Agent가 사용할 커스텀 도구(Tool) 정의
+@tool
+def get_word_length(word: str) -> int:
+    """단어의 글자 수를 반환합니다."""
+    return len(word)
+
+# 도구 목록 리스트에 등록
+tools = [get_word_length]
+
+# 3. LLM(대형 언어 모델) 생성
+llm = OpenAI(temperature=0)
+
+# 4. Agent 초기화 (ZERO_SHOT_REACT_DESCRIPTION: 도구의 설명을 보고 스스로 판단하여 사용)
+agent = initialize_agent(
+    tools=tools, 
+    llm=llm, 
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
+    verbose=True # Agent의 사고 과정(Thought/Action/Observation)을 출력
+)
+
+# 5. Agent 실행
+response = agent.run("educate라는 단어의 글자 수는 몇 개인가요?")
+print("\n최종 결과:", response)

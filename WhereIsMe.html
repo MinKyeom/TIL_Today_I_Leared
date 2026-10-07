@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>내 위치 가져오기 예시</title>
+  </head>
+  <body>
+    <h2>현재 내 위치 정보</h2>
+    <button onclick="getCurrentLocation()">내 위치 조회하기</button>
+    <p id="result"></p>
+
+    <script>
+      function getCurrentLocation() {
+        const resultText = document.getElementById("result");
+
+        // 1. 브라우저의 Geolocation 지원 여부 확인
+        if ("geolocation" in navigator) {
+          resultText.innerText = "위치 정보를 가져오는 중...";
+
+          // 2. 현재 위치 요청 (성공 콜백, 에러 콜백, 옵션)
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const latitude = position.coords.latitude; // 위도
+              const longitude = position.coords.longitude; // 경도
+              const accuracy = position.coords.accuracy; // 오차 범위 (m)
+
+              resultText.innerHTML = `
+              <strong>위치 수집 성공!</strong><br>
+              - 위도(Latitude): ${latitude}<br>
+              - 경도(Longitude): ${longitude}<br>
+              - 오차 범위: 약 ${Math.round(accuracy)}m
+            `;
+            },
+            (error) => {
+              // 에러 처리
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  resultText.innerText =
+                    "사용자가 위치 정보 권한을 거부했습니다.";
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  resultText.innerText = "위치 정보를 사용할 수 없습니다.";
+                  break;
+                case error.TIMEOUT:
+                  resultText.innerText =
+                    "위치 정보 요청 시간이 초과되었습니다.";
+                  break;
+                default:
+                  resultText.innerText = "알 수 없는 오류가 발생했습니다.";
+              }
+            },
+            {
+              enableHighAccuracy: true, // GPS 활용 여부 (높은 정확도)
+              timeout: 10000, // 10초 내 응답 없으면 타임아웃
+              maximumAge: 0, // 캐시된 위치 정보 사용 안 함
+            }
+          );
+        } else {
+          resultText.innerText =
+            "이 브라우저에서는 Geolocation을 지원하지 않습니다.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -14,7 +14,13 @@ footer_height = 80
 for page in doc:
   rect = page.rect
   
+  header = page.get_text(clip = (0,0,rect.width,header_height))
+  footer = page.get_text(clip=(0,rect.height - footer_height,rect.width, rect.height))
+  
   print("check",rect)
+  
+  print(header)
+  print(footer)
 
 
 for p in doc:
